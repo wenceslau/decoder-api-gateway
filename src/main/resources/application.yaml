@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ead-api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: authuser-service
+          uri: lb://EAD-AUTHUSER-SERVICE  #lb indida que o loadbalance ira ser usado para chamar a URI
+          predicates:
+            - Path=/ead-authuser/**
+        - id: courses-service
+          uri: lb://EAD-COURSE-SERVICE
+          predicates:
+            - Path=/ead-course/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: "http://localhost:8761/eureka"
+  instance:
+    hostname: localhost
+
